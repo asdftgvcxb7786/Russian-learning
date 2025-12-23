@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>大学俄语学习 · 交互式课程</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f4f6f8;
+      color: #333;
+    }
+
+    header {
+      background: #2c3e50;
+      color: #fff;
+      padding: 16px 24px;
+      font-size: 22px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .section {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+
+    /* 字母表 */
+    .alphabet {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .letter {
+      background: #ecf0f1;
+      border-radius: 6px;
+      text-align: center;
+      padding: 12px;
+      cursor: pointer;
+      font-size: 20px;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .letter:hover {
+      background: #d0e6f7;
+      transform: translateY(-2px);
+    }
+
+    .info-box {
+      margin-top: 16px;
+      padding: 12px;
+      background: #f9fbfd;
+      border-left: 4px solid #3498db;
+    }
+
+    /* 词汇卡片 */
+    .vocab-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: #f9fbfd;
+      border-radius: 6px;
+      padding: 14px;
+      border: 1px solid #e1e4e8;
+    }
+
+    .ru {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .cn {
+      color: #666;
+      margin-top: 6px;
+    }
+
+    /* 语法 */
+    .grammar {
+      line-height: 1.7;
+    }
+
+    .example {
+      background: #eef6ff;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 8px;
+    }
+
+    /* 练习 */
+    .exercise {
+      margin-top: 12px;
+    }
+
+    button {
+      background: #3498db;
+      border: none;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #2980b9;
+    }
+
+    .result {
+      margin-top: 8px;
+      font-weight: bold;
+    }
+
+    /* 进度 */
+    .progress {
+      background: #e1e4e8;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 16px;
+      margin-top: 10px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #2ecc71;
+      width: 0%;
+      transition: width 0.3s;
+    }
+  </style>
+</head>
+<body>
+
+<header>大学俄语课程 · 交互式学习网页</header>
+
+<div class="container">
+
+  <!-- 字母表 -->
+  <div class="section">
+    <h2>一、俄语字母表（А–Я）</h2>
+    <p>点击字母查看读音与示例：</p>
+    <div class="alphabet" id="alphabet"></div>
+    <div class="info-box" id="letterInfo">请选择一个字母</div>
+  </div>
+
+  <!-- 词汇 -->
+  <div class="section">
+    <h2>二、基础词汇（中俄对照）</h2>
+    <div class="vocab-list">
+      <div class="card">
+        <div class="ru">Здравствуйте</div>
+        <div class="cn">你好（正式）</div>
+      </div>
+      <div class="card">
+        <div class="ru">Привет</div>
+        <div class="cn">你好（非正式）</div>
+      </div>
+      <div class="card">
+        <div class="ru">Спасибо</div>
+        <div class="cn">谢谢</div>
+      </div>
+      <div class="card">
+        <div class="ru">До свидания</div>
+        <div class="cn">再见</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 语法 -->
+  <div class="section">
+    <h2>三、基础语法讲解</h2>
+    <div class="grammar">
+      <p><strong>1. 名词性：</strong>俄语名词有阴性、阳性和中性。</p>
+      <div class="example">
+        <strong>Пример：</strong><br>
+        дом（房子，阳性）<br>
+        книга（书，阴性）<br>
+        окно（窗户，中性）
+      </div>
+
+      <p><strong>2. 动词变位（现在时）：</strong></p>
+      <div class="example">
+        Я учусь.（我学习。）<br>
+        Он работает.（他工作。）
+      </div>
+    </div>
+  </div>
+
+  <!-- 练习 -->
+  <div class="section">
+    <h2>四、互动练习</h2>
+
+    <div class="exercise">
+      <p>选择题：单词“Спасибо”的意思是？</p>
+      <select id="q1">
+        <option value="">请选择</option>
+        <option value="a">你好</option>
+        <option value="b">谢谢</option>
+        <option value="c">再见</option>
+      </select>
+      <br>
+      <button onclick="checkAnswer()">提交</button>
+      <div class="result" id="result"></div>
+    </div>
+  </div>
+
+  <!-- 进度 -->
+  <div class="section">
+    <h2>五、学习进度</h2>
+    <p>当前学习完成度：</p>
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const letters = [
+    { l: "А", sound: "a", word: "мама", cn: "妈妈" },
+    { l: "Б", sound: "b", word: "брат", cn: "兄弟" },
+    { l: "В", sound: "v", word: "вино", cn: "酒" },
+    { l: "Г", sound: "g", word: "город", cn: "城市" },
+    { l: "Д", sound: "d", word: "дом", cn: "房子" }
+  ];
+
+  const alphabetDiv = document.getElementById("alphabet");
+  const infoBox = document.getElementById("letterInfo");
+  let progress = 0;
+
+  letters.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "letter";
+    div.innerText = item.l;
+    div.onclick = () => {
+      infoBox.innerHTML = `
+        <strong>字母：</strong>${item.l}<br>
+        <strong>读音：</strong>${item.sound}<br>
+        <strong>示例：</strong>${item.word}（${item.cn}）
+      `;
+      progress = Math.min(progress + 10, 100);
+      updateProgress();
+    };
+    alphabetDiv.appendChild(div);
+  });
+
+  function checkAnswer() {
+    const q1 = document.getElementById("q1").value;
+    const result = document.getElementById("result");
+    if (q1 === "b") {
+      result.innerText = "✔ 正确！";
+      result.style.color = "green";
+      progress = Math.min(progress + 20, 100);
+    } else {
+      result.innerText = "✘ 错误，请再试一次。";
+      result.style.color = "red";
+    }
+    updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById("progressBar").style.width = progress + "%";
+  }
+</script>
+
+</body>
+</html>
